@@ -65,25 +65,28 @@ class Solution {
         }
         int begin=0;
         int end=nums1.length;
-        int lMax=Integer.MAX_VALUE;
-        int rMin=Integer.MIN_VALUE;
-        while(lMax>rMin){
-            int i=(begin+end)/2;
-            int j=(nums1.length+nums2.length)/2-i;
-            lMax=i>0?Math.max(nums1[i-1],nums2[j-1]):nums2[j-1];
-            rMin=i<nums1.length?Math.min(nums1[i],nums2[j]):nums2[j];
-            if(i<nums1.length && nums1[i]<nums2[j-1]){
+        int i=0;
+        int j=0;
+        double medium=0;
+        boolean flag=((nums1.length+nums2.length)%2==0);
+        while(begin<=end){
+            i=(begin+end)/2;
+            j=(nums1.length+nums2.length)/2-i;
+            int iRight=i<nums1.length?nums1[i]:Integer.MAX_VALUE;
+            int iLeft=i>0?nums1[i-1]:Integer.MIN_VALUE;
+            int jRight=j<nums2.length?nums2[j]:Integer.MAX_VALUE;
+            int jLeft=j>0?nums2[j-1]:Integer.MIN_VALUE;
+            if(iRight>=jLeft && jRight>=iLeft){
+                medium=Math.min(iRight,jRight);
+                medium=flag?(Math.max(iLeft,jLeft)+medium)/2.0:medium;
+                break;
+            }else if(iRight<jLeft){
                 begin=i+1;
-            }
-            if(i>0 && nums1[i-1]>nums2[j]){
-                end=i;
+            }else if(jRight<iLeft){
+                end=i-1;
             }
         }
-        if ((nums1.length+nums2.length)%2==0) {
-            return ((float)lMax+(float)rMin)/2;
-        }else{
-            return rMin;
-        }
+        return medium;
     }
 
     public static int maxProduct(int[] nums) {
@@ -239,6 +242,9 @@ class Solution {
             }
         }
         return s.substring((maxCenter-maxRediu+1)/2,(maxCenter+maxRediu-1)/2);
+    }
+    public static int findTheLongestSubstring(String s) {
+
     }
 
 
