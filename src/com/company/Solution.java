@@ -271,7 +271,21 @@ class Solution {
         return ans;
     }
     public static int findKthNumber(int m, int n, int k) {
-
+        int low=1;
+        int high=m*n;
+        while(low<high){
+            int medium=(low+high)/2;
+            int count=0;
+            for(int i=1;i<=m;i++){
+                count+=Math.min(medium/i,n);
+            }
+            if(count>=k){
+                high=medium;
+            }else{
+                low=medium+1;
+            }
+        }
+        return high;
     }
 
 }
