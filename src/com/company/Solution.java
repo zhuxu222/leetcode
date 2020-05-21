@@ -310,5 +310,29 @@ class Solution {
         }
         return high;
     }
+    public static String convert(String s, int numRows) {
+        if(null==s || s.length()<=0){
+            return "";
+        }
+        if(numRows<2){
+            return s;
+        }
+        StringBuilder sb=new StringBuilder();
+        int len=s.length();
+        int t=2*numRows-2;
+        for(int i=0;i<numRows;i++){
+            int m=i;
+            int n=t-i;
+            while(m<len){
+                sb.append(s.charAt(m));
+                if(i>0 && i<numRows-1 && n<len){
+                    sb.append(s.charAt(n));
+                }
+                m+=t;
+                n+=t;
+            }
+        }
+        return sb.toString();
+    }
 
 }
