@@ -2,6 +2,7 @@ package com.company;
 
 
 import javax.script.AbstractScriptEngine;
+import java.security.KeyPair;
 import java.util.*;
 
 class Solution {
@@ -333,6 +334,68 @@ class Solution {
             }
         }
         return sb.toString();
+    }
+    public  static int reverse(int x) {
+
+        return x;
+    }
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        Stack<TreeNode>treeNodeStack=new Stack<>();
+        Stack<Integer>beginPre=new Stack<>();
+        Stack<Integer>endPre=new Stack<>();
+        Stack<Integer>beginIn=new Stack<>();
+        Stack<Integer>endIn=new Stack<>();
+        if(null==preorder || null==inorder || preorder.length<=0 || inorder.length<=0){
+            return null;
+        }
+        TreeNode head=new TreeNode(0);
+        treeNodeStack.push(head);
+        beginPre.push(0);
+        endPre.push(preorder.length-1);
+        beginIn.push(0);
+        endIn.push(inorder.length-1);
+        while(!treeNodeStack.empty()){
+            int bi=beginIn.pop();
+            int ei=endIn.pop();
+            int bp=beginPre.pop();
+            int ep=endPre.pop();
+            TreeNode tempNode=treeNodeStack.pop();
+            tempNode.val=preorder[bp];
+            int ti=bi;
+            for(ti=bi;ti<=ei;ti++){
+                if(inorder[ti]==tempNode.val){
+                    break;
+                }
+            }
+            if(ti>bi){
+                beginIn.push(bi);
+                endIn.push(ti-1);
+                beginPre.push(bp+1);
+                endPre.push(bp+ti-bi);
+                tempNode.left=new TreeNode(0);
+                treeNodeStack.push(tempNode.left);
+            }
+            if(ti<ei){
+                beginIn.push(ti+1);
+                endIn.push(ei);
+                beginPre.push(bp+ti-bi+1);
+                endPre.push(ep);
+                tempNode.right=new TreeNode(0);
+                treeNodeStack.push(tempNode.right);
+            }
+        }
+        return head;
     }
 
 }

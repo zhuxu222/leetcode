@@ -1,9 +1,12 @@
 package com.company;
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        Solution.findKthNumber(11,13,57);
+        int x=0xffffffff;
+        System.out.println("x-1="+x);
     }
 }
