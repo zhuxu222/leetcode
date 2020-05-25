@@ -335,10 +335,6 @@ class Solution {
         }
         return sb.toString();
     }
-    public  static int reverse(int x) {
-
-        return x;
-    }
 
     public class TreeNode {
         int val;
@@ -396,6 +392,122 @@ class Solution {
             }
         }
         return head;
+    }
+    public static String minWindow(String s, String t) {
+        if(s.length()<t.length()){
+            return "";
+        }
+        Map<Character,Integer>needChar=new HashMap<>();
+        Map<Character,Integer>hasChar=new HashMap<>();
+        for(int i=0;i<t.length();i++){
+            needChar.put(t.charAt(i),needChar.getOrDefault(t.charAt(i),0)+1);
+        }
+        int minBegin=-1;
+        int minEnd=s.length()-1;
+        int minLen=Integer.MAX_VALUE;
+
+        int begin=-1;
+        int end=-1;
+
+        boolean endFlag=false;
+        while(!endFlag){
+            while(end<s.length()-1 && !checkMapContian(hasChar,needChar)){
+                end++;
+                char tc=s.charAt(end);
+                hasChar.put(tc,hasChar.getOrDefault(tc,0)+1);
+            }
+            while(checkMapContian(hasChar,needChar)){
+                begin++;
+                char tc=s.charAt(begin);
+                hasChar.put(tc,hasChar.get(tc)-1);
+            }
+            int len=end-begin+1;
+            if(len<minLen){
+                minBegin=begin;
+                minEnd=end;
+                minLen=len;
+            }
+            if(end==s.length()-1){
+                endFlag=true;
+            }
+        }
+        return minBegin==-1?"":s.substring(minBegin,minEnd+1);
+    }
+    public static boolean checkMapContian(Map<Character,Integer>s,Map<Character,Integer>t){
+        Iterator iter=t.entrySet().iterator();
+        while(iter.hasNext()){
+            Map.Entry entry=(Map.Entry) iter.next();
+            Character key=(Character) entry.getKey();
+            Integer val=(Integer)entry.getValue();
+            if(s.getOrDefault(key,0)<val){
+                return false;
+            }
+        }
+        return true;
+    }
+    public static int reverse(int x) {
+        int[] xL={0,0,0,0,0,0,0,0,0,0};
+        int i=-1;
+        while(x!=0){
+            i++;
+            xL[i]=x%10;
+            x/=10;
+        }
+        long ret=0;
+        long bit=1;
+        for(int k=i;k>=0;k--){
+            ret+=xL[k]*bit;
+            bit*=10;
+        }
+        if(ret >Integer.MAX_VALUE || ret<Integer.MIN_VALUE){
+            ret=0;
+        }
+        return (int)ret;
+    }
+    public static int myAtoi(String str) {
+        int i=0;
+        int len=str.length();
+        while(i<len && str.charAt(i)==32){
+            i++;
+        }
+        if(i>len-1 || len==0){
+            return 0;
+        }
+        char fc=str.charAt(i);
+        int sign=1;
+        if(fc==43){
+            sign=1;
+            i++;
+        }else if(fc==45){
+            sign=-1;
+            i++;
+        }else if(48>fc || fc>57 ){
+            return 0;
+        }
+        while(i<len && str.charAt(i)==48){
+            i++;
+        }
+        Stack<Integer>numList=new Stack<>();
+        int numBit=0;
+        while( i<len && 47<str.charAt(i) && str.charAt(i)<58){
+            numList.push((int)str.charAt(i)-48);
+            numBit++;
+            i++;
+        }
+        if(numBit>10){
+            return sign>0?Integer.MAX_VALUE:Integer.MIN_VALUE;
+        }
+
+        long num=0;
+        long bit=1;
+        while(!numList.empty()){
+            num+=((long)numList.pop())*bit;
+            bit*=10;
+        }
+        num=sign*num;
+        num=Math.max(num,Integer.MIN_VALUE);
+        num=Math.min(num,Integer.MAX_VALUE);
+        return (int)num;
     }
 
 }
