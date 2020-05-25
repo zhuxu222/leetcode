@@ -509,7 +509,32 @@ class Solution {
         num=Math.min(num,Integer.MAX_VALUE);
         return (int)num;
     }
-
+    public static boolean isPalindrome(int x) {
+        if(x<0){
+            return false;
+        }
+        int[] bitList=new int[10];
+        int len=0;
+        while(x!=0){
+            bitList[len]=x%10;
+            x/=10;
+            len++;
+        }
+        if(len<=1){
+            return true;
+        }
+        int i=0;
+        int j=len-1;
+        while(j>i && bitList[i]==bitList[j]){
+            i++;
+            j--;
+        }
+        if(i>=j){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 }
