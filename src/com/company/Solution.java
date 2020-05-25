@@ -2,6 +2,7 @@ package com.company;
 
 
 import javax.script.AbstractScriptEngine;
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.security.KeyPair;
 import java.util.*;
 
@@ -535,6 +536,22 @@ class Solution {
             return false;
         }
     }
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer,Integer>map=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            int differ=target-nums[i];
+            if(map.containsKey(differ)){
+                return new int[]{map.get(differ),i};
+            }else{
+                map.put(nums[i],i);
+            }
+        }
+        throw new IllegalArgumentException("No two sum solution");
+    }
+    public List<List<Integer>> threeSum(int[] nums) {
+
+    }
+
 
 
 }
