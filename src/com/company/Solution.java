@@ -622,4 +622,35 @@ class Solution {
     }
 
 
+    public int findSecondMinimumValue(TreeNode root) {
+        int ret=-1;
+        Queue<TreeNode>level=new LinkedList<>();
+        level.offer(root);
+        int num=1;
+        int low=root.val;
+        while(!level.isEmpty()){
+            int tempNum=0;
+            while(num>0){
+                TreeNode temp=level.poll();
+                if(temp.val>low){
+                    ret=Math.min((ret==-1?Integer.MAX_VALUE:ret),temp.val);
+                }else if(temp.val==low){
+                    if(null!=temp.left){
+                        level.offer(temp.left);
+                        tempNum++;
+                    }
+                    if(null!=temp.right){
+                        level.offer(temp.right);
+                        tempNum++;
+                    }
+                }
+                num--;
+            }
+            num=tempNum;
+        }
+        return ret;
+    }
+
+
+
 }
