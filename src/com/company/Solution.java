@@ -548,10 +548,78 @@ class Solution {
         }
         throw new IllegalArgumentException("No two sum solution");
     }
-    public List<List<Integer>> threeSum(int[] nums) {
-
+    public int findDuplicate0(int[] nums) {
+        int n=nums.length-1;
+        int l=1;
+        int r=n;
+        while(l<r){
+            int m=(l+r)/2;
+            int cnt=0;
+            for(int i=0;i<=n;i++){
+                if(nums[i]<=m){
+                    cnt++;
+                }
+            }
+            if(cnt>m){
+                r=m;
+            }else{
+                l=m+1;
+            }
+        }
+        return r;
     }
-
+    public int findDuplicate1(int[] nums) {
+        int ret=-1;
+        for(int i=0;i<nums.length;i++){
+            if(nums[Math.abs(nums[i])]<0){
+                ret=Math.abs(nums[i]);
+            }
+            nums[Math.abs(nums[i])]=-nums[Math.abs(nums[i])];
+        }
+        for(int i=0;i<nums.length;i++){
+            nums[i]=Math.abs(nums[i]);
+        }
+        return ret;
+    }
+    public int findDuplicate2(int[] nums) {
+        int n=nums.length-1;
+        int bitMax=31;
+        int ans=0;
+        while((n>>bitMax)==0){
+            bitMax--;
+        }
+        for(int bit=0;bit<=bitMax;bit++){
+            int reBit=(1<<bit);
+            int x=0;
+            int y=0;
+            for(int i=0;i<=n;i++){
+                if((nums[i]&reBit)!=0){
+                    x++;
+                }
+                if(i>0 && (i&reBit)!=0){
+                    y++;
+                }
+            }
+            if(x>y){
+                ans |= reBit;
+            }
+        }
+        return ans;
+    }
+    public int findDuplicate(int[] nums) {
+        int slow=0;
+        int fast=0;
+        do{
+            slow=nums[slow];
+            fast=nums[nums[fast]];
+        }while(slow!=fast);
+        slow=0;
+        while(slow!=fast){
+            slow=nums[slow];
+            fast=nums[fast];
+        }
+        return slow;
+    }
 
 
 }
