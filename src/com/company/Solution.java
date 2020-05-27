@@ -650,7 +650,23 @@ class Solution {
         }
         return ret;
     }
-
+    public int subarraysDivByK(int[] A, int K) {
+        Map<Integer,Integer>rem=new HashMap<>();
+        int count=0;
+        int sum=0;
+        rem.put(0,1);
+        for(int i:A){
+            sum+=i;
+            int remainder=sum%K;
+            remainder=remainder<0?(remainder+K):remainder;
+            rem.put(remainder,rem.getOrDefault(remainder,0)+1);
+        }
+        for(Map.Entry entry:rem.entrySet()){
+            int val= (int) entry.getValue();
+            count+=(val*(val-1))/2;
+        }
+        return count;
+    }
 
 
 }
