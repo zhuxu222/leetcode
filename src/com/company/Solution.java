@@ -667,6 +667,56 @@ class Solution {
         }
         return count;
     }
-
-
+    private String LinkedListToString(LinkedList<String>linkedString){
+        StringBuffer sb=new StringBuffer();
+        for(String s:linkedString){
+            sb.append(s);
+        }
+        return sb.toString();
+    }
+    public String decodeString(String s) {
+        LinkedList<String>stack=new LinkedList<>();
+        int p=0;
+        while(p<s.length()){
+            char cur=s.charAt(p);
+            if(Character.isDigit(cur)){
+                StringBuffer dig=new StringBuffer();
+                while(Character.isDigit(s.charAt(p))){
+                    dig.append(s.charAt(p++));
+                }
+                stack.add(dig.toString());
+            }else if(Character.isLetter(cur) || cur=='['){
+                stack.add(String.valueOf(cur));
+                p++;
+            }else{
+                p++;
+                LinkedList<String>sub=new LinkedList<>();
+                while(!"[".equals(stack.getLast())){
+                    sub.add(stack.removeLast());
+                }
+                stack.removeLast();
+                int timeRe=Integer.parseInt(stack.removeLast());
+                Collections.reverse(sub);
+                String strSub=LinkedListToString(sub);
+                StringBuffer sb=new StringBuffer();
+                while(timeRe-->0){
+                    sb.append(strSub);
+                }
+                stack.add(sb.toString());
+            }
+        }
+        return LinkedListToString(stack);
+    }
+    public int rob(int[] nums) {
+        int max=0;
+        int lMax=0;
+        int llMax=0;
+        for(int i=0;i<nums.length;i++){
+            int tempMax=Math.max(llMax,lMax)+nums[i];
+            llMax=lMax;
+            lMax=max;
+            max=tempMax;
+        }
+        return Math.max(max,lMax);
+    }
 }
