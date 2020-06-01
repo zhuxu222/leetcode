@@ -768,4 +768,20 @@ class Solution {
         }
         return true;
     }
+    public List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
+        List<Boolean>ret=new LinkedList<>();
+        int max=0;
+        for(int i:candies){
+            max=Math.max(i,max);
+        }
+        int min=max-extraCandies;
+        for(int i:candies){
+            if(min>i){
+                ret.add(false);
+            }else{
+                ret.add(true);
+            }
+        }
+        return ret;
+    }
 }
