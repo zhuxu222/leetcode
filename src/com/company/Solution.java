@@ -719,4 +719,53 @@ class Solution {
         }
         return Math.max(max,lMax);
     }
+    public int largestRectangleArea(int[] heights) {
+        int[] maxList=new int[heights.length];
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<heights.length;i++){
+            maxList[i]=0;
+            boolean linked=true;
+            for(int j=i-1;j>=0;j--){
+                if(heights[i]>=heights[j]){
+                    maxList[j]=maxList[j]+heights[j];
+                    linked=false;
+                    max=Math.max(max,maxList[j]);
+                }else{
+                    maxList[j]=0;
+                    if(linked){
+                        maxList[i]+=heights[i];
+                    }
+                }
+            }
+            max=Math.max(max,maxList[i]);
+        }
+        return max;
+    }
+    public boolean isSymmetric(TreeNode root) {
+        Queue<TreeNode>l=new LinkedList<>();
+        Queue<TreeNode>r=new LinkedList<>();
+        l.add(root);
+        r.add(root);
+        while(!l.isEmpty() && !r.isEmpty()){
+            TreeNode lTop=l.poll();
+            TreeNode rTop=r.poll();
+            if(null!=lTop && null!=rTop){
+                if(lTop.val==rTop.val){
+                    l.add(lTop.right);
+                    l.add(lTop.left);
+                    r.add(rTop.left);
+                    r.add(rTop.right);
+                }else{
+                    return false;
+                }
+            }else{
+                if(null==lTop && null==rTop){
+
+                }else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
