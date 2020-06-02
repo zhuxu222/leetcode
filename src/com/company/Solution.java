@@ -341,9 +341,12 @@ class Solution {
         int val;
         TreeNode left;
         TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
         }
     }
 
@@ -784,4 +787,137 @@ class Solution {
         }
         return ret;
     }
+    static class Node {
+        public int val;
+        public Node prev;
+        public Node next;
+        public Node child;
+    };
+    public Node flatten(Node head) {
+        Node left=head;
+        while(null!=left){
+            if(null!=left.child){
+                Node right=left.next;
+                Node childNode=left.child;
+                left.next=childNode;
+                childNode.prev=left;
+                left.child=null;
+                while(null!=childNode.next){
+                    childNode=childNode.next;
+                }
+                if(null!=right){
+                    childNode.next=right;
+                    right.prev=childNode;
+                }
+            }
+            left=left.next;
+        }
+        return head;
+    }
+
+    public void flatten(TreeNode root) {
+        if(null==root){
+            return;
+        }
+        Stack<TreeNode>rest=new Stack<>();
+        TreeNode tail=root;
+        while(null!=tail.left || null!=tail.right || !rest.isEmpty()){
+            while(null!=tail){
+                if(null!=tail.right){
+                    rest.add(tail.right);
+                }
+                if(null!=tail.left){
+                    tail.right=tail.left;
+                    tail.left=null;
+                }else{
+                    tail.right=null;
+                    break;
+                }
+                tail=tail.right;
+            }
+            if(!rest.isEmpty()){
+                tail.right=rest.pop();
+                tail=tail.right;
+            }
+        }
+    }
+
+    public int sumNums(int n) {
+        int ans = 0, A = n, B = n + 1;
+        boolean flag;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        flag = ((B & 1) > 0) && (ans += A) > 0;
+        A <<= 1;
+        B >>= 1;
+
+        return ans >> 1;
+    }
+
+    public int numWays(int n) {
+        int max=1000000007;
+        int l=1;
+        int ll=0;
+        for(int i=1;i<=n;i++){
+            int temp=(l+ll)%max;
+            ll=l;
+            l=temp;
+        }
+        return n<0?0:l;
+    }
+
+
+
+
 }
