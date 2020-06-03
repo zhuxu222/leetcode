@@ -917,7 +917,27 @@ class Solution {
         return n<0?0:l;
     }
 
-
+    double new21Game(int N, int K, int W) {
+        if(K<=0){
+            return 1.0;
+        }
+        if(K-1+W<=N){
+            return 1.0;
+        }
+        if(K>N){
+            return 0.0;
+        }
+        double f=1.0/(double)W;
+        double[] dp = new double[K+W];
+        for(int i=K;i<=N && i<K+W-1;i++){
+            dp[i]=1.0;
+        }
+        dp[K-1]=f*Math.min((N-K+1),W);
+        for(int i=K-2;i>=0;i--){
+            dp[i]=dp[i+1]+f*(dp[i+1]-dp[i+W+1]);
+        }
+        return dp[0];
+    }
 
 
 }

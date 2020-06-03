@@ -6,9 +6,8 @@ public class Main {
 
     public static void main(String[] args) {
         Solution solution=new Solution();
-        int[] a={1,2,3,1};
-        int t=5;
-        int b =solution.rob(a);
+
+        double b =solution.new21Game(21,17,10);
         System.out.println(b);
         System.out.println((-6)%5);
     }
