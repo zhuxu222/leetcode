@@ -2,6 +2,7 @@ package com.company;
 
 
 import javax.script.AbstractScriptEngine;
+import java.lang.reflect.Array;
 import java.lang.reflect.MalformedParameterizedTypeException;
 import java.security.KeyPair;
 import java.util.*;
@@ -937,6 +938,37 @@ class Solution {
             dp[i]=dp[i+1]+f*(dp[i+1]-dp[i+W+1]);
         }
         return dp[0];
+    }
+
+    public int[] productExceptSelf0(int[] nums) {
+        int len=nums.length;
+        int[] prefix=new int[len];
+        int[] suffix=new int[len];
+        prefix[0]=nums[0];
+        suffix[len-1]=nums[len-1];
+        for(int i=1;i<len;i++){
+            prefix[i]=prefix[i-1]*nums[i];
+            suffix[len-1-i]=suffix[len-i]*nums[len-i-1];
+        }
+        int[] ret=new int[len];
+        for(int i=0;i<len;i++){
+            ret[i]=(i>0?prefix[i-1]:1)*(i<len-1?suffix[i+1]:1);
+        }
+        return ret;
+    }
+    public int[] productExceptSelf(int[] nums) {
+        int prt=1;
+        int[] ret=new int[nums.length];
+        for(int i=0;i<nums.length;i++){
+            ret[i]=prt;
+            prt*=nums[i];
+        }
+        prt=1;
+        for(int i=nums.length-1;i>=0;i--){
+            ret[i]*=prt;
+            prt*=nums[i];
+        }
+        return ret;
     }
 
 
