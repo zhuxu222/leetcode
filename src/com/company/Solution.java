@@ -970,6 +970,17 @@ class Solution {
         }
         return ret;
     }
+    public int minIncrementForUnique(int[] A) {
+        Arrays.sort(A);
+        int num=0;
+        for(int i=1;i<A.length;i++){
+            while(A[i]<=A[i-1]){
+                num++;
+                A[i]++;
+            }
+        }
+        return num;
+    }
 
 
 }
