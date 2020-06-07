@@ -973,39 +973,53 @@ class Solution {
 
     public int[] spiralOrder(int[][] matrix) {
         int iMax=matrix.length-1;
+        if(iMax<0){
+            return new int[0];
+        }
         int iMin=0;
         int jMin=0;
         int jMax=matrix[0].length-1;
-        int i=0;
-        int j=0;
+        if(jMax<0){                     
+            return new int[0];
+        }
         int len=(iMax+1)*(jMax+1);
         int[] ret =new int[len];
         int num=0;
         while(num<len){
-            while(j<jMax && num<len){
+            int i=iMin;
+            int j=jMin;
+            if(num==len-1){
+                ret[num]=matrix[i][j];
+                break;
+            }
+            while(j<jMax && num<len-1){
                 ret[num]=matrix[i][j];
                 num++;
                 j++;
             }
-            iMin++;
-            while(i<iMax && num<len){
-              ret[num]=matrix[i][j];
-              num++;
-              i++;
+            while(i<iMax && num<len-1){
+                ret[num]=matrix[i][j];
+                num++;
+                i++;
             }
-            jMax--;
-            while(j>jMin && num<len){
+            while(j>jMin && num<len-1){
                 ret[num]=matrix[i][j];
                 num++;
                 j--;
             }
-            iMax--;
-            while(i>iMin && num<len){
+            while(i>iMin && num<len-1){
                 ret[num]=matrix[i][j];
                 num++;
                 i--;
             }
-            jMin++;
+            if(iMin<iMax){
+                iMin++;
+                iMax--;
+            }
+            if(jMin<jMax){
+                jMin++;
+                jMax--;
+            }
         }
         return ret;
     }
