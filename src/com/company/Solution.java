@@ -983,42 +983,94 @@ class Solution {
     }
 
     public int[] spiralOrder(int[][] matrix) {
+        if(null==matrix || matrix.length<=0 || matrix[0].length<=0){
+            return new int[0];
+        }
         int iMax=matrix.length-1;
         int iMin=0;
         int jMin=0;
         int jMax=matrix[0].length-1;
-        int i=0;
-        int j=0;
         int len=(iMax+1)*(jMax+1);
         int[] ret =new int[len];
         int num=0;
+        int i=iMin;
+        int j=jMin-1;
         while(num<len){
-            while(j<jMax && num<len){
-                ret[num]=matrix[i][j];
-                num++;
+            if(i==iMin+1 && j==jMin && jMin!=jMax){
+                iMin++;
+                jMin++;
+                iMax--;
+                jMax--;
+            }
+            if(i==iMin && j<jMax){
                 j++;
-            }
-            iMin++;
-            while(i<iMax && num<len){
-              ret[num]=matrix[i][j];
-              num++;
-              i++;
-            }
-            jMax--;
-            while(j>jMin && num<len){
-                ret[num]=matrix[i][j];
-                num++;
+            }else if(i<iMax && j==jMax){
+                i++;
+            }else if(i==iMax && j>jMin){
                 j--;
-            }
-            iMax--;
-            while(i>iMin && num<len){
-                ret[num]=matrix[i][j];
-                num++;
+            }else if(i>iMin && j==jMin){
                 i--;
             }
-            jMin++;
+            ret[num]=matrix[i][j];
+            num++;
         }
         return ret;
+    }
+
+    public int longestConsecutive(int[] nums) {
+        Map<Integer,Integer>len=new LinkedHashMap<>();
+        Map<Integer, Boolean>visited=new LinkedHashMap<>();
+        int lenMax=0;
+        for(int i:nums){
+            len.put(i,len.getOrDefault(i,0)+1);
+            visited.put(i,false);
+        }
+        for(int i:nums){
+            if(visited.get(i)){
+                continue;
+            }
+            visited.put(i,true);
+            int lenTemp=1;
+            int l=i;
+            while(visited.containsKey(--l)){
+                visited.put(l,true);
+                lenTemp+=len.get(i);
+            }
+            int r=i;
+            while(visited.containsKey(++r)){
+                visited.put(r,true);
+                lenTemp+=len.get(i);
+            }
+            lenMax=Math.max(lenMax,lenTemp);
+        }
+        return lenMax;
+    }
+
+    public int longestConsecutiveWithoutRepeat(int[] nums) {
+        Map<Integer, Boolean>visited=new LinkedHashMap<>();
+        int lenMax=0;
+        for(int i:nums){
+            visited.put(i,false);
+        }
+        for(int i:nums){
+            if(visited.get(i)){
+                continue;
+            }
+            visited.put(i,true);
+            int lenTemp=1;
+            int l=i;
+            while(visited.containsKey(--l)){
+                visited.put(l,true);
+                lenTemp++;
+            }
+            int r=i;
+            while(visited.containsKey(++r)){
+                visited.put(r,true);
+                lenTemp++;
+            }
+            lenMax=Math.max(lenMax,lenTemp);
+        }
+        return lenMax;
     }
 
 }
