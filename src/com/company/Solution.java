@@ -1072,5 +1072,89 @@ class Solution {
         }
         return lenMax;
     }
+    public boolean equationsPossible(String[] equations) {
+        int[] record=new int[26];
+        Map<Integer,Set<Integer>>set=new HashMap<>();
+        int num=1;
+        for(String s:equations){
+            if(s.charAt(1)=='!'){
+                continue;
+            }
+            int a=s.charAt(0)-97;
+            int b=s.charAt(3)-97;
+            if(record[a]==0 && record[b]==0){
+                record[a]=num;
+                record[b]=num;
+                Set<Integer>list =new LinkedHashSet<>();
+                list.add(a);
+                list.add(b);
+                set.put(num,list);
+                num++;
+            }else if(record[a]!=0 && record[b]!=0 && record[a]!=record[b]){
+                Set<Integer> l1,l2;
+                l1=set.get(record[a]);
+                l2=set.get(record[b]);
+                int key=record[a];
+                int lost=record[b];
+                if(l1.size()<l2.size()){
+                    lost=key;
+                    key=record[b];
+                    Set<Integer> t=l2;
+                    l2=l1;
+                    l1=t;
+                }
+                l1.addAll(l2);
+                for(int i:l2){
+                    record[i]=key;
+                }
+                set.remove(lost);
+            }else{
+                int in,out;
+                if(record[a]==0){
+                    out=a;
+                    in=b;
+                }else{
+                    out=b;
+                    in=a;
+                }
+                set.get(record[in]).add(out);
+                record[out]=record[in];
+            }
+        }
+        for(String s:equations){
+            if(s.charAt(1)=='='){
+                continue;
+            }
+            int a=s.charAt(0)-97;
+            int b=s.charAt(3)-97;
+            if(a==b){
+                return false;
+            }
+            if(record[a]!=0 && record[b]!=0 && record[a]==record[b]){
+                return false;
+            }
+        }
+        return true;
+    }
+    public int translateNum(int num) {
+        int[] dp=new int[2];
+        int[] last=new int[2];
+        last[0]=26;
+        last[1]=26;
+        dp[0]=1;
+        while(num!=0){
+            int re=num%10;
+            num/=10;
+            int temp=dp[0];
+            if(re!=0 && re*10+last[0]<26){
+                temp+=dp[1];
+            }
+            dp[1]=dp[0];
+            dp[0]=temp;
+            last[1]=last[0];
+            last[0]=re;
+        }
+        return dp[0];
+    }
 
 }
