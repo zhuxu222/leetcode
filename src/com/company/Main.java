@@ -7,8 +7,8 @@ public class Main {
     public static void main(String[] args) {
         Solution solution=new Solution();
 
-        int[][] a={{7},{9},{6}};
-        int[] b =solution.spiralOrder(a);
+        int a=12258;
+        int b =solution.translateNum(a);
         System.out.println(b);
         System.out.println((-6)%5);
     }

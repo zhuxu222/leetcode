@@ -540,6 +540,22 @@ class Solution {
             return false;
         }
     }
+
+    public static boolean isPalindromeFast(int x) {
+        if(x<0){
+            return false;
+        }
+        if(x>0 && x%10==0){
+            return false;
+        }
+        int y=0;
+        while(y<x){
+            y=y*10+x%10;
+            x/=10;
+        }
+        return x==y || x==y/10;
+    }
+
     public int[] twoSum(int[] nums, int target) {
         Map<Integer,Integer>map=new HashMap<>();
         for(int i=0;i<nums.length;i++){
@@ -1071,6 +1087,142 @@ class Solution {
             lenMax=Math.max(lenMax,lenTemp);
         }
         return lenMax;
+    }
+    public boolean equationsPossible(String[] equations) {
+        int[] record=new int[26];
+        Map<Integer,Set<Integer>>set=new HashMap<>();
+        int num=1;
+        for(String s:equations){
+            if(s.charAt(1)=='!'){
+                continue;
+            }
+            int a=s.charAt(0)-97;
+            int b=s.charAt(3)-97;
+            if(record[a]==0 && record[b]==0){
+                record[a]=num;
+                record[b]=num;
+                Set<Integer>list =new LinkedHashSet<>();
+                list.add(a);
+                list.add(b);
+                set.put(num,list);
+                num++;
+            }else if(record[a]!=0 && record[b]!=0 && record[a]!=record[b]){
+                Set<Integer> l1,l2;
+                l1=set.get(record[a]);
+                l2=set.get(record[b]);
+                int key=record[a];
+                int lost=record[b];
+                if(l1.size()<l2.size()){
+                    lost=key;
+                    key=record[b];
+                    Set<Integer> t=l2;
+                    l2=l1;
+                    l1=t;
+                }
+                l1.addAll(l2);
+                for(int i:l2){
+                    record[i]=key;
+                }
+                set.remove(lost);
+            }else{
+                int in,out;
+                if(record[a]==0){
+                    out=a;
+                    in=b;
+                }else{
+                    out=b;
+                    in=a;
+                }
+                set.get(record[in]).add(out);
+                record[out]=record[in];
+            }
+        }
+        for(String s:equations){
+            if(s.charAt(1)=='='){
+                continue;
+            }
+            int a=s.charAt(0)-97;
+            int b=s.charAt(3)-97;
+            if(a==b){
+                return false;
+            }
+            if(record[a]!=0 && record[b]!=0 && record[a]==record[b]){
+                return false;
+            }
+        }
+        return true;
+    }
+    public int translateNum(int num) {
+        int[] dp=new int[2];
+        int[] last=new int[2];
+        last[0]=26;
+        last[1]=26;
+        dp[0]=1;
+        while(num!=0){
+            int re=num%10;
+            num/=10;
+            int temp=dp[0];
+            if(re!=0 && re*10+last[0]<26){
+                temp+=dp[1];
+            }
+            dp[1]=dp[0];
+            dp[0]=temp;
+            last[1]=last[0];
+            last[0]=re;
+        }
+        return dp[0];
+    }
+
+    public int[] dailyTemperatures(int[] T) {
+        int len=T.length;
+        int[] ret=new int[len];
+        //Stack<Integer>back=new Stack<>();
+        Deque<Integer>back=new LinkedList<>();
+        for(int i=0;i<len;i++){
+            while(!back.isEmpty() && T[i]>T[back.peek()]){
+                int j=back.pop();
+                ret[j]=i-j;
+            }
+            back.push(i);
+        }
+        return ret;
+    }
+
+    public int[] dailyTemperaturesFaster(int[] T) {
+        int len=T.length;
+        int[] ret=new int[len];
+        for(int i=len-2;i>=0;i--){
+            int j=i+1;
+            while(j<len){
+                if(T[j]>T[i]){
+                    ret[i]=j-i;
+                    break;
+                }else{
+                    if(ret[j]==0){
+                        ret[i]=0;
+                        break;
+                    }else{
+                        j=j+ret[j];
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
+    public int[] dailyTemperaturesFaster2(int[] T) {
+        int len=T.length;
+        int[] ret=new int[len];
+        int[] cr=new int[len];
+        int k=-1;
+        for(int i=0;i<len;i++){
+            while(k>=0 && T[i]>T[cr[k]]){
+                ret[cr[k]]=i-cr[k];
+                k--;
+            }
+            cr[++k]=i;
+        }
+        return ret;
     }
 
 }

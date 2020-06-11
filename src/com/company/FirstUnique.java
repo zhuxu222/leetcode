@@ -19,6 +19,9 @@ public class FirstUnique {
     }
 
     public int showFirstUnique() {
+        while(!mUnique.isEmpty() && mHad.getOrDefault(mUnique.getFirst(),-1)!=1){
+            mUnique.removeFirst();
+        }
         if(mUnique.isEmpty()){
             return -1;
         }
@@ -29,8 +32,6 @@ public class FirstUnique {
         mHad.put(value,mHad.getOrDefault(value,0)+1);
         if(mHad.get(value)==1){
             mUnique.add(value);
-        }else{
-            mUnique.removeFirstOccurrence(value);
         }
     }
 }
