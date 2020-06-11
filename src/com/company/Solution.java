@@ -540,6 +540,22 @@ class Solution {
             return false;
         }
     }
+
+    public static boolean isPalindromeFast(int x) {
+        if(x<0){
+            return false;
+        }
+        if(x>0 && x%10==0){
+            return false;
+        }
+        int y=0;
+        while(y<x){
+            y=y*10+x%10;
+            x/=10;
+        }
+        return x==y || x==y/10;
+    }
+
     public int[] twoSum(int[] nums, int target) {
         Map<Integer,Integer>map=new HashMap<>();
         for(int i=0;i<nums.length;i++){
@@ -1155,6 +1171,20 @@ class Solution {
             last[0]=re;
         }
         return dp[0];
+    }
+    public int[] dailyTemperatures(int[] T) {
+        int len=T.length;
+        int[] ret=new int[len];
+        //Stack<Integer>back=new Stack<>();
+        Deque<Integer>back=new LinkedList<>();
+        for(int i=0;i<len;i++){
+            while(!back.isEmpty() && T[i]>T[back.peek()]){
+                int j=back.pop();
+                ret[j]=i-j;
+            }
+            back.push(i);
+        }
+        return ret;
     }
 
 }
