@@ -1210,24 +1210,17 @@ class Solution {
         return ret;
     }
 
-    public int[] dailyTemperaturesFaster(int[] T) {
+    public int[] dailyTemperaturesFaster2(int[] T) {
         int len=T.length;
         int[] ret=new int[len];
-        for(int i=len-2;i>=0;i--){
-            int j=i+1;
-            while(j<len){
-                if(T[j]>T[i]){
-                    ret[i]=j-i;
-                    break;
-                }else{
-                    if(ret[j]==0){
-                        ret[i]=0;
-                        break;
-                    }else{
-                        j=j+ret[j];
-                    }
-                }
+        int[] cr=new int[len];
+        int k=-1;
+        for(int i=0;i<len;i++){
+            while(k>=0 && T[i]>T[cr[k]]){
+                ret[cr[k]]=i-cr[k];
+                k--;
             }
+            cr[++k]=i;
         }
         return ret;
     }
