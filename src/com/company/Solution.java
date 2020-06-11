@@ -1172,6 +1172,7 @@ class Solution {
         }
         return dp[0];
     }
+
     public int[] dailyTemperatures(int[] T) {
         int len=T.length;
         int[] ret=new int[len];
@@ -1183,6 +1184,50 @@ class Solution {
                 ret[j]=i-j;
             }
             back.push(i);
+        }
+        return ret;
+    }
+
+    public int[] dailyTemperaturesFaster(int[] T) {
+        int len=T.length;
+        int[] ret=new int[len];
+        for(int i=len-2;i>=0;i--){
+            int j=i+1;
+            while(j<len){
+                if(T[j]>T[i]){
+                    ret[i]=j-i;
+                    break;
+                }else{
+                    if(ret[j]==0){
+                        ret[i]=0;
+                        break;
+                    }else{
+                        j=j+ret[j];
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
+    public int[] dailyTemperaturesFaster(int[] T) {
+        int len=T.length;
+        int[] ret=new int[len];
+        for(int i=len-2;i>=0;i--){
+            int j=i+1;
+            while(j<len){
+                if(T[j]>T[i]){
+                    ret[i]=j-i;
+                    break;
+                }else{
+                    if(ret[j]==0){
+                        ret[i]=0;
+                        break;
+                    }else{
+                        j=j+ret[j];
+                    }
+                }
+            }
         }
         return ret;
     }
