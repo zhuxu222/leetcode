@@ -1225,4 +1225,60 @@ class Solution {
         return ret;
     }
 
+    public List<List<Integer>> threeSum(int[] nums) {
+        if(null==nums) return null;
+        int target=0;
+        List<List<Integer>>ret=new ArrayList<>();
+        Arrays.sort(nums);
+        int len=nums.length;
+        for(int i=0;i<len;i++){
+            if(i>0 && nums[i]==nums[i-1]){
+                continue;
+            }
+            if(nums[i]>0){
+                break;
+            }
+            int k=len-1;
+            target=-nums[i];
+            for(int j=i+1;j<len;j++){
+                if(j>i+1 && nums[j]==nums[j-1]){
+                    continue;
+                }
+                while(k>j && nums[j]+nums[k]>target){
+                    k--;
+                }
+                if(k<=j){
+                    break;
+                }
+                if(nums[j]+nums[k]==target){
+                    List<Integer>tempList=new ArrayList<>(3);
+                    tempList.add(nums[i]);
+                    tempList.add(nums[j]);
+                    tempList.add(nums[k]);
+                    ret.add(tempList);
+                }
+            }
+        }
+        return ret;
+    }
+
+    public String longestCommonPrefix(String[] strs) {
+        if(null==strs || strs.length<=0){
+            return "";
+
+        }        StringBuilder prefix=new StringBuilder(strs[0]);
+        for(String s:strs){
+            if(s.length()<prefix.length()){
+                prefix.delete(s.length(),prefix.length());
+            }
+            for(int i=0;i<prefix.length();i++){
+                if(prefix.charAt(i)!=s.charAt(i)){
+                    prefix.delete(i,prefix.length());
+                    break;
+                }
+            }
+        }
+        return prefix.toString();
+    }
+
 }
