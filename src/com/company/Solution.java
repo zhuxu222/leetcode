@@ -1281,4 +1281,25 @@ class Solution {
         return prefix.toString();
     }
 
+    public String longestCommonPrefix2(String[] strs) {
+        if(null==strs || strs.length<=0){
+            return "";
+
+        }
+        StringBuilder prefix=new StringBuilder();
+        int i=0;
+        int minLen=Integer.MAX_VALUE;
+        while(i<strs[0].length()){
+            char c=strs[0].charAt(i);
+            for(String s:strs){
+                if(i>=s.length() || s.charAt(i)!=c){
+                    return prefix.toString();
+                }
+            }
+            prefix.append(c);
+            i++;
+        }
+        return prefix.toString();
+    }
+
 }
