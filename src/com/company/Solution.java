@@ -1284,7 +1284,6 @@ class Solution {
     public String longestCommonPrefix2(String[] strs) {
         if(null==strs || strs.length<=0){
             return "";
-
         }
         StringBuilder prefix=new StringBuilder();
         int i=0;
@@ -1300,6 +1299,25 @@ class Solution {
             i++;
         }
         return prefix.toString();
+    }
+
+    public int maxScoreSightseeingPair(int[] A) {
+        if(null==A || A.length<2){
+            return 0;
+        }
+        int maxPre=A[0];
+        int maxCore=0;
+        for(int j=1;j<A.length;j++){
+            int core=A[j]-j+maxPre;
+            if(core>maxCore){
+                maxCore=core;
+            }
+            int pre=A[j]+j;
+            if(pre>maxPre){
+                maxPre=pre;
+            }
+        }
+        return maxCore;
     }
 
 }
