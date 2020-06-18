@@ -338,19 +338,6 @@ class Solution {
         return sb.toString();
     }
 
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val; }
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
-
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         Stack<TreeNode>treeNodeStack=new Stack<>();
         Stack<Integer>beginPre=new Stack<>();
@@ -1225,6 +1212,101 @@ class Solution {
         return ret;
     }
 
+    public List<List<Integer>> threeSum(int[] nums) {
+        if(null==nums) return null;
+        int target=0;
+        List<List<Integer>>ret=new ArrayList<>();
+        Arrays.sort(nums);
+        int len=nums.length;
+        for(int i=0;i<len;i++){
+            if(i>0 && nums[i]==nums[i-1]){
+                continue;
+            }
+            if(nums[i]>0){
+                break;
+            }
+            int k=len-1;
+            target=-nums[i];
+            for(int j=i+1;j<len;j++){
+                if(j>i+1 && nums[j]==nums[j-1]){
+                    continue;
+                }
+                while(k>j && nums[j]+nums[k]>target){
+                    k--;
+                }
+                if(k<=j){
+                    break;
+                }
+                if(nums[j]+nums[k]==target){
+                    List<Integer>tempList=new ArrayList<>(3);
+                    tempList.add(nums[i]);
+                    tempList.add(nums[j]);
+                    tempList.add(nums[k]);
+                    ret.add(tempList);
+                }
+            }
+        }
+        return ret;
+    }
+
+    public String longestCommonPrefix(String[] strs) {
+        if(null==strs || strs.length<=0){
+            return "";
+
+        }        StringBuilder prefix=new StringBuilder(strs[0]);
+        for(String s:strs){
+            if(s.length()<prefix.length()){
+                prefix.delete(s.length(),prefix.length());
+            }
+            for(int i=0;i<prefix.length();i++){
+                if(prefix.charAt(i)!=s.charAt(i)){
+                    prefix.delete(i,prefix.length());
+                    break;
+                }
+            }
+        }
+        return prefix.toString();
+    }
+
+    public String longestCommonPrefix2(String[] strs) {
+        if(null==strs || strs.length<=0){
+            return "";
+        }
+        StringBuilder prefix=new StringBuilder();
+        int i=0;
+        int minLen=Integer.MAX_VALUE;
+        while(i<strs[0].length()){
+            char c=strs[0].charAt(i);
+            for(String s:strs){
+                if(i>=s.length() || s.charAt(i)!=c){
+                    return prefix.toString();
+                }
+            }
+            prefix.append(c);
+            i++;
+        }
+        return prefix.toString();
+    }
+
+    public int maxScoreSightseeingPair(int[] A) {
+        if(null==A || A.length<2){
+            return 0;
+        }
+        int maxPre=A[0];
+        int maxCore=0;
+        for(int j=1;j<A.length;j++){
+            int core=A[j]-j+maxPre;
+            if(core>maxCore){
+                maxCore=core;
+            }
+            int pre=A[j]+j;
+            if(pre>maxPre){
+                maxPre=pre;
+            }
+        }
+        return maxCore;
+    }
+
     public int climbStairs(int n) {
         int temp=1;
         int last=0;
@@ -1273,5 +1355,4 @@ class Solution {
         }
         return value;
     }
-
 }

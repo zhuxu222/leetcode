@@ -7,6 +7,22 @@ public class Main {
     public static void main(String[] args) {
         Solution solution=new Solution();
 
+        String a="1-2--3--4-5--6--7";
+        TreeNode b =BanaryTreeCodec.recoverFromPreorder(a);
+        //String b =solution.longestCommonPrefix(a);
+        System.out.println(b);
+        System.out.println((-6)%5);
+    }
+}
+package com.company;
+
+import java.util.Arrays;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Solution solution=new Solution();
+
         int[] a={46799,84724,68972,12676,44989,16887,44936,59666,24821,17058,43651,61560,57005,60607,13500,32842,
                 11723,55134,86946,28362,34896,36978,2785,6020,44344,26916,29787,39460,39875,97374,43806,81251,77617,
                 79043,36453,3141,55959,74330,45177,70982,32391,17941,59171,75433,35733,33326,77089,34395,53091,36405,
