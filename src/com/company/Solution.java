@@ -338,19 +338,6 @@ class Solution {
         return sb.toString();
     }
 
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val; }
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
-
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         Stack<TreeNode>treeNodeStack=new Stack<>();
         Stack<Integer>beginPre=new Stack<>();
@@ -1319,5 +1306,4 @@ class Solution {
         }
         return maxCore;
     }
-
 }
