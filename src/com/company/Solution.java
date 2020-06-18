@@ -1225,4 +1225,53 @@ class Solution {
         return ret;
     }
 
+    public int climbStairs(int n) {
+        int temp=1;
+        int last=0;
+        for(int i=0;i<n;i++){
+            int t=temp+last;
+            last=temp;
+            temp=t;
+        }
+        return temp;
+    }
+
+    public int findBestValue(int[] arr, int target) {
+        Arrays.sort(arr);
+        int len=arr.length;
+        int[] prefix=new int[len+1];
+        prefix[0]=0;
+        for(int i=0;i<len;i++){
+            prefix[i+1]=prefix[i]+arr[i];
+        }
+        if(prefix[len]<=target){
+            return arr[len-1];
+        }
+        int sum=Integer.MAX_VALUE;
+        int value=0;
+        for(int i=0;i<len;i++){
+            if(i>0 && arr[i]==arr[i-1]){
+                continue;
+            }
+            int v=i<len-1?(target-prefix[i])/(len-i):arr[i];
+            if(i>0 && v<=arr[i-1]){
+                v=arr[i-1];
+            }
+            if(((i>0 && arr[i-1]<v) || i==0) && v<arr[i]){
+                if(Math.abs(prefix[i]+(len-i)*v-target)>Math.abs(prefix[i]+(len-i)*(v+1)-target)){
+                    v=(v+1)<arr[i]?v+1:v;
+                }
+            }
+            if(v>=arr[i]){
+                v=arr[i];
+            }
+            int temp=Math.abs(prefix[i]+(len-i)*v-target);
+            if(temp<sum){
+                sum=temp;
+                value=v;
+            }
+        }
+        return value;
+    }
+
 }
