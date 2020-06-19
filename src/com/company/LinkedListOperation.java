@@ -1,6 +1,7 @@
 package com.company;
 
 public class LinkedListOperation {
+    //面试题 02.04. 分割链表
     public ListNode partition(ListNode head, int x) {
         ListNode pre=head;
         while(null!=pre){
