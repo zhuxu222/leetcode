@@ -5,6 +5,26 @@ import java.util.Stack;
 public class BanaryTreeCodec {
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
+        Stack<TreeNode>upNode=new Stack<>();
+        StringBuilder res=new StringBuilder();
+        upNode.push(root);
+        res.append(root.val);
+        while(){
+            while(null!=upNode.peek()){
+                upNode.push(upNode.peek().left);
+                if(null!=upNode.peek().left){
+                    res.append(upNode.peek().val);
+                }else{
+                    res.append("null");
+                }
+            }
+            while(null==upNode.peek().right){
+                res.append("null");
+                upNode.pop();
+            }
+
+
+        }
         return null;
     }
 
@@ -53,4 +73,17 @@ public class BanaryTreeCodec {
         return upNode.firstElement();
     }
 }
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
 
