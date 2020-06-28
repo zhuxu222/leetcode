@@ -7,12 +7,13 @@ public class Main {
     public static void main(String[] args) {
         Solution solution=new Solution();
         StringOperation so=new StringOperation();
-        String a="1010111";
-        String b="111";
-        String c=so.addBinary(a,b);
+        ArrayOperation ao=new ArrayOperation();
+        int[] a={2,3,1,2,4,3};
+        int s=7;
+        int c=ao.minSubArrayLen(s,a);
         //TreeNode b =BanaryTreeCodec.recoverFromPreorder(a);
         //String b =solution.longestCommonPrefix(a);
-        System.out.println(b);
+
         System.out.println((-6)%5);
     }
 }

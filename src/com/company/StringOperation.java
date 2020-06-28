@@ -41,7 +41,7 @@ public class StringOperation {
         int lenb=b.length();
         int len=Math.max(lena,lenb);
         int i=0;
-        StringBuilder sb=new StringBuilder();
+        StringBuffer sb=new StringBuffer();
         int carry=0;
         while(i<len || carry>0){
             int ca=0;
@@ -55,9 +55,10 @@ public class StringOperation {
             int sum=ca+cb+carry;
             int rest=sum%2;
             carry=sum/2;
-            sb.insert(0,rest);
+            sb.append(rest);
             ++i;
         }
+        sb.reverse();
         return sb.toString();
     }
 
