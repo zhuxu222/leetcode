@@ -1,4 +1,4 @@
-package com.company;
+package com.company.ArrayOperation;
 
 public class ArrayOperation {
     public int threeSumClosest(int[] nums, int target) {
