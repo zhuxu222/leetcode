@@ -3,6 +3,10 @@ package com.company;
 import java.util.Stack;
 
 public class BanaryTreeCodec {
+    //genarate tree
+//    public TreeNode generateTree(Integer[] numList){
+//
+//    }
     // Encodes a tree to a single string.
 //    public String serialize(TreeNode root) {
 //        Stack<TreeNode>upNode=new Stack<>();
@@ -71,6 +75,21 @@ public class BanaryTreeCodec {
             upNode.push(temp);
         }
         return upNode.firstElement();
+    }
+
+
+    //112. 路径总和
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if(root==null){
+            return false;
+        }
+        if(root.left==null && root.right==null){
+            return sum==root.val;
+        }
+        return (hasPathSum(root.left,sum-root.val) || hasPathSum(root.right,sum-root.val));
+    }
+    public boolean hasPathSumBuffer(TreeNode root, int sum) {
+        Stack<Integer>sumStatck=new Stack<>();
     }
 }
 
