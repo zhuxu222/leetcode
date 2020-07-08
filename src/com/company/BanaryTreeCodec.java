@@ -90,7 +90,29 @@ public class BanaryTreeCodec {
     }
     public boolean hasPathSumBuffer(TreeNode root, int sum) {
         Stack<Integer>sumStatck=new Stack<>();
+        return false;
     }
+
+    //面试题 16.11. 跳水板
+    public int[] divingBoard(int shorter, int longer, int k) {
+        if(k<=0){
+            int[] a={};
+            return a;
+        }
+        int dif=longer-shorter;
+        if(dif==0){
+            int[] a={shorter*k};
+            return a;
+        }
+        int[] res=new int[k+1];
+        res[0]=k*shorter;
+        for(int i=1;i<=k;i++){
+            res[i]=res[i-1]+dif;
+        }
+        return res;
+    }
+
+
 }
 
 class TreeNode {
