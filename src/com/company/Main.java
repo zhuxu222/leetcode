@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.ArrayOperation.ArrayOperation;
+
 import java.util.Arrays;
 
 public class Main {
@@ -8,12 +10,15 @@ public class Main {
         Solution solution=new Solution();
         StringOperation so=new StringOperation();
         ArrayOperation ao=new ArrayOperation();
-        int[] a={2,3,1,2,4,3};
-        int s=7;
-        int c=ao.minSubArrayLen(s,a);
+
+//        int s=7;
+//        int c=ao.minSubArrayLen(s,a);
         //TreeNode b =BanaryTreeCodec.recoverFromPreorder(a);
         //String b =solution.longestCommonPrefix(a);
 
-        System.out.println((-6)%5);
+        int[] a={1,2,2,1};
+        int[] b={2,2};
+        int[] c=ao.intersect(a,b);
+        System.out.println(c);
     }
 }

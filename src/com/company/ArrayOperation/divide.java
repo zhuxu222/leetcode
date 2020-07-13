@@ -13,7 +13,7 @@ public class divide {
         while(dp!=target){
             if(dp>target){
                 r=dp;
-            }else if(dp<target){
+            }else{
                 l=Math.min(dp+1,nums.length-1);
             }
             dp= random.nextInt(r-l+1)+1;
@@ -35,5 +35,6 @@ public class divide {
             }
 
         }
+        return 0;
     }
 }
