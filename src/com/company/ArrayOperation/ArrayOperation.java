@@ -1,6 +1,9 @@
 package com.company.ArrayOperation;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ArrayOperation {
@@ -58,6 +61,30 @@ public class ArrayOperation {
             ret[i]=sav[i];
         }
         return ret;
+    }
+
+    //120. 三角形最小路径和
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int m=triangle.size();
+        int n=triangle.get(m-1).size();
+        int[] bp=new int[n];
+        bp[0]=triangle.get(0).get(0);
+        for(int i=1;i<m;i++){
+            List<Integer>tmp=triangle.get(i);
+            int k=tmp.size();
+            bp[k-1]=bp[k-2]+tmp.get(k-1);
+            for(int j=k-2;j>0;j--){
+                bp[j]=Math.min(bp[j],bp[j-1])+tmp.get(j);
+            }
+            if(k>1){
+                bp[0]+=tmp.get(0);
+            }
+        }
+        int minValue=bp[0];
+        for(int i=1;i<n;i++){
+            minValue=Math.min(minValue,bp[i]);
+        }
+        return minValue;
     }
 }
 
