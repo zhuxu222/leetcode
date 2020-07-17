@@ -86,5 +86,26 @@ public class ArrayOperation {
         }
         return minValue;
     }
+
+    //35. 搜索插入位置
+    public int searchInsert(int[] nums, int target) {
+        int l=0;
+        int r=nums.length-1;
+        if(target<nums[0]){
+            return 0;
+        }else if(target>nums[r]){
+            return r+1;
+        }
+        while(r>l){
+            int m=(l+r)/2;
+            if(nums[m]<target){
+                l=m+1;
+            }else{
+                r=m;
+            }
+        }
+        return r;
+    }
+
 }
 
