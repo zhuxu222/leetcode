@@ -112,6 +112,53 @@ public class BanaryTreeCodec {
         return res;
     }
 
+    //538. 把二叉搜索树转换为累加树
+    //给定一个二叉搜索树（Binary Search Tree），把它转换成为累加树（Greater Tree)，使得每个节点的值是原来的节点值加上所有大于它的节点值之和。
+    public TreeNode convertBST(TreeNode root) {
+        if (null==root){
+            return null;
+        }
+        Stack<TreeNode> nodeStack=new Stack<>();
+        nodeStack.push(root);
+        int sum=0;
+
+        while(null!=nodeStack.peek().right){
+            nodeStack.push(nodeStack.peek().right);
+        }
+
+        while(!nodeStack.isEmpty()){
+            TreeNode tempNode=nodeStack.pop();
+            sum+=tempNode.val;
+            tempNode.val=sum;
+            if (null!=tempNode.left){
+                nodeStack.push(tempNode.left);
+                while(null!=nodeStack.peek().right){
+                    nodeStack.push(nodeStack.peek().right);
+                }
+            }
+        }
+        return root;
+    }
+
+    int convertBST1Sum=0;
+    public TreeNode convertBST1(TreeNode root) {
+        if (null==root){
+            return null;
+        }
+        convertBST1(root.right);
+        convertBST1Sum+=root.val;
+        root.val=convertBST1Sum;
+        convertBST1(root.left);
+        return root;
+    }
+
+    public TreeNode convertBST2(TreeNode root) {
+        if (null==root){
+            return null;
+        }
+        return null;
+    }
+
 
 }
 
