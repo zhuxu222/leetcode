@@ -151,13 +151,98 @@ public class BanaryTreeCodec {
         convertBST1(root.left);
         return root;
     }
+//    501. 二叉搜索树中的众数
+//    给定一个有相同值的二叉搜索树（BST），找出 BST 中的所有众数（出现频率最高的元素）。
+//    假定 BST 有如下定义：
+//    结点左子树中所含结点的值小于等于当前结点的值 结点右子树中所含结点的值大于等于当前结点的值左子树和右子树都是二叉搜索树
+//    public int[] findMode(TreeNode root) {
+//
+//    }
+//    public void checkNode(modeData data,TreeNode root){
+//        if (null==root.left){
+//            checkNode(data,root.left);
+//        }
+//        if (root.val==data.tempValue){
+//            data.tempTimes++;
+//            if (data.tempTimes>maxTimesValue){
+//
+//            }
+//        }
+//
+//        if (null==root.right){
+//            checkNode(data,root.right);
+//        }
+//
+//
+//    }
 
-    public TreeNode convertBST2(TreeNode root) {
-        if (null==root){
-            return null;
+//    235. 二叉搜索树的最近公共祖先
+//    给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
+//    百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，
+//    最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大
+//    （一个节点也可以是它自己的祖先）。”
+//    例如，给定如下二叉搜索树:  root = [6,2,8,0,4,7,9,null,null,3,5
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        int min,max;
+        if (p.val==q.val){
+            return p;
+        }else if (p.val>q.val){
+            min=q.val;
+            max=p.val;
+        }else{
+            min=p.val;
+            max=q.val;
+        }
+        TreeNode tempNode=root;
+        while(null!=tempNode){
+            if (tempNode.val>max){
+                tempNode=tempNode.left;
+            }else if (tempNode.val<min){
+                tempNode=tempNode.right;
+            }else{
+                return tempNode;
+            }
         }
         return null;
     }
+
+
+    class modeData{
+        int tempValue=0;
+        int tempTimes=0;
+        int maxTimes=0;
+        int maxTimesValue=0;
+        int[] mode;
+    }
+
+
+//    617. 合并二叉树
+//    给定两个二叉树，想象当你将它们中的一个覆盖到另一个上时，两个二叉树的一些节点便会重叠。
+//    你需要将他们合并为一个新的二叉树。合并的规则是如果两个节点重叠，那么将他们的值相加作为节点合并后的新值，
+//    否则不为 NULL 的节点将直接作为新二叉树的节点。
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (null==t1 && null==t2){
+            return null;
+        }
+        TreeNode merged=new TreeNode(0);
+        if (null==t1){
+            merged.val=t2.val;
+            merged.right=t2.right;
+            merged.left=t2.left;
+            return merged;
+        }
+        if (null==t2){
+            merged.val=t1.val;
+            merged.right=t1.right;
+            merged.left=t1.left;
+            return merged;
+        }
+        merged.val=t1.val+t2.val;
+        merged.left=mergeTrees(t1.left,t2.left);
+        merged.right=mergeTrees(t1.right,t2.right);
+        return merged;
+    }
+
 
 
 }
