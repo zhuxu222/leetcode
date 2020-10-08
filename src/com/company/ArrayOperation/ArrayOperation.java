@@ -107,5 +107,18 @@ public class ArrayOperation {
         return r;
     }
 
+    //344. 反转字符串
+    public void reverseString(char[] s) {
+        if(null==s || s.length<=1){
+            return;
+        }
+        int mid=s.length/2;
+        for (int i=0;i<mid;i++){
+            char temp=s[i];
+            s[i]=s[s.length-1-i];
+            s[s.length-1-i]=temp;
+        }
+    }
+
 }
 
