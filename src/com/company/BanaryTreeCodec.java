@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class BanaryTreeCodec {
@@ -242,7 +244,6 @@ public class BanaryTreeCodec {
         merged.right=mergeTrees(t1.right,t2.right);
         return merged;
     }
-
 
 
 }
