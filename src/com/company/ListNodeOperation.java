@@ -50,5 +50,29 @@ public class ListNodeOperation {
         return false;
     }
 
-
+    //142. 环形链表 II
+    public ListNode detectCycle(ListNode head) {
+        if (null==head || null==head.next){
+            return null;
+        }
+        ListNode fast=head.next.next;
+        ListNode slow=head.next;
+        ListNode pHead=head;
+        ListNode pMeet=null;
+        while(null!=fast && null!=fast.next){
+            if (fast==slow){
+                pMeet=fast;
+                break;
+            }
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        if (null!=pMeet){
+            while(pHead!=pMeet){
+                pHead=pHead.next;
+                pMeet=pMeet.next;
+            }
+        }
+        return pMeet;
+    }
 }
