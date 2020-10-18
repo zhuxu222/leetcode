@@ -1,12 +1,20 @@
 package com.company;
 
-public class ListNodeOperation {
-    class ListNode {
+public class ListNodeOperation
+{
+    class ListNode
+    {
         int val;
         ListNode next;
-        ListNode(int x) {
-            val = x;
-            next = null;
+        ListNode() {}
+        ListNode(int val)
+        {
+            this.val = val;
+        }
+        ListNode(int val, ListNode next)
+        {
+            this.val = val;
+            this.next = next;
         }
     }
 
@@ -74,5 +82,28 @@ public class ListNodeOperation {
             }
         }
         return pMeet;
+    }
+
+    //19. 删除链表的倒数第N个节点
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode front=head;
+        ListNode back=head;
+        for (int i=0;i<n;i++)
+        {
+            if (null!= front.next)
+            {
+                front=front.next;
+            }else{
+                return head.next;
+            }
+
+        }
+        while(null!=front.next)
+        {
+            front=front.next;
+            back=back.next;
+        }
+        back.next=back.next.next;
+        return head;
     }
 }

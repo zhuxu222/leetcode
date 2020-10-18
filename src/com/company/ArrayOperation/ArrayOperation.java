@@ -120,5 +120,10 @@ public class ArrayOperation {
         }
     }
 
+    //416. 分割等和子集
+    public boolean canPartition(int[] nums) {
+        
+    }
+
 }
 
